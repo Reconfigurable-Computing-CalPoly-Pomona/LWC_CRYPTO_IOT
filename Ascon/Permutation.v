@@ -382,3 +382,4 @@ module Permutation(
   assign Pl_io_S = Ps_io_Sout; // @[Permutation.scala 38:9]
   assign Pl_io_EN_IN = io_EN_IN; // @[Permutation.scala 39:13]
 endmodule
+
