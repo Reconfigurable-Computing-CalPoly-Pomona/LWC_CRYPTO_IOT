@@ -384,7 +384,7 @@ module HashEngine(
   input         io_accept,
   input         io_finalMessage,
   output [63:0] io_H,
-  output        io_done
+  output        io_data_ready
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [319:0] _RAND_0;
@@ -395,13 +395,13 @@ module HashEngine(
   reg [31:0] _RAND_5;
   reg [31:0] _RAND_6;
 `endif // RANDOMIZE_REG_INIT
-  wire  Permutation_clock; // @[HashEngine.scala 67:30]
-  wire  Permutation_reset; // @[HashEngine.scala 67:30]
-  wire [319:0] Permutation_io_State; // @[HashEngine.scala 67:30]
-  wire [3:0] Permutation_io_i; // @[HashEngine.scala 67:30]
-  wire [3:0] Permutation_io_b; // @[HashEngine.scala 67:30]
-  wire  Permutation_io_EN_IN; // @[HashEngine.scala 67:30]
-  wire [319:0] Permutation_io_StateR; // @[HashEngine.scala 67:30]
+  wire  Permutation_clock; // @[HashEngine.scala 66:30]
+  wire  Permutation_reset; // @[HashEngine.scala 66:30]
+  wire [319:0] Permutation_io_State; // @[HashEngine.scala 66:30]
+  wire [3:0] Permutation_io_i; // @[HashEngine.scala 66:30]
+  wire [3:0] Permutation_io_b; // @[HashEngine.scala 66:30]
+  wire  Permutation_io_EN_IN; // @[HashEngine.scala 66:30]
+  wire [319:0] Permutation_io_StateR; // @[HashEngine.scala 66:30]
   reg [319:0] State; // @[HashEngine.scala 24:24]
   reg [63:0] outState; // @[HashEngine.scala 25:27]
   reg [2:0] curr_state; // @[HashEngine.scala 29:29]
@@ -412,23 +412,20 @@ module HashEngine(
   wire  _T = 3'h0 == curr_state; // @[Conditional.scala 37:30]
   wire  _T_1 = 3'h1 == curr_state; // @[Conditional.scala 37:30]
   wire [319:0] _T_2 = {io_M,256'h0}; // @[Cat.scala 29:58]
-  wire [319:0] _T_3 = State ^ _T_2; // @[HashEngine.scala 52:32]
-  wire  _T_4 = value == 3'h0; // @[HashEngine.scala 55:34]
+  wire [319:0] _T_3 = State ^ _T_2; // @[HashEngine.scala 51:32]
+  wire  _T_4 = value == 3'h0; // @[HashEngine.scala 54:34]
   wire  _T_5 = value == 3'h4; // @[Counter.scala 38:24]
   wire [2:0] _T_7 = value + 3'h1; // @[Counter.scala 39:22]
   wire  _T_8 = 3'h2 == curr_state; // @[Conditional.scala 37:30]
-  wire [3:0] _T_16 = i + 4'h1; // @[HashEngine.scala 75:24]
-  wire [3:0] _T_18 = rounds - 4'h1; // @[HashEngine.scala 77:35]
-  wire  _T_19 = i == _T_18; // @[HashEngine.scala 77:24]
-  wire  _GEN_9 = _T_19 ? 1'h0 : 1'h1; // @[HashEngine.scala 77:41]
+  wire [3:0] _T_16 = i + 4'h1; // @[HashEngine.scala 74:24]
+  wire [3:0] _T_18 = rounds - 4'h1; // @[HashEngine.scala 76:35]
+  wire  _T_19 = i == _T_18; // @[HashEngine.scala 76:24]
+  wire  _GEN_9 = _T_19 ? 1'h0 : 1'h1; // @[HashEngine.scala 76:41]
   wire  _T_20 = 3'h3 == curr_state; // @[Conditional.scala 37:30]
-  wire [15:0] _T_23 = length - 16'h40; // @[HashEngine.scala 92:30]
-  wire  _T_28 = length == 16'h40; // @[HashEngine.scala 96:25]
+  wire [15:0] _T_23 = length - 16'h40; // @[HashEngine.scala 91:30]
+  wire  _T_28 = length == 16'h40; // @[HashEngine.scala 95:25]
   wire  _T_29 = 3'h4 == curr_state; // @[Conditional.scala 37:30]
-  wire  _GEN_27 = _T_20 ? _T_28 : _T_29; // @[Conditional.scala 39:67]
-  wire  _GEN_36 = _T_8 ? 1'h0 : _GEN_27; // @[Conditional.scala 39:67]
-  wire  _GEN_45 = _T_1 ? 1'h0 : _GEN_36; // @[Conditional.scala 39:67]
-  Permutation Permutation ( // @[HashEngine.scala 67:30]
+  Permutation Permutation ( // @[HashEngine.scala 66:30]
     .clock(Permutation_clock),
     .reset(Permutation_reset),
     .io_State(Permutation_io_State),
@@ -438,13 +435,13 @@ module HashEngine(
     .io_StateR(Permutation_io_StateR)
   );
   assign io_H = outState; // @[HashEngine.scala 40:10]
-  assign io_done = _T ? 1'h0 : _GEN_45; // @[HashEngine.scala 42:13 HashEngine.scala 98:25 HashEngine.scala 105:21]
+  assign io_data_ready = io_H == outState; // @[HashEngine.scala 108:23 HashEngine.scala 111:23]
   assign Permutation_clock = clock;
   assign Permutation_reset = reset;
-  assign Permutation_io_State = State; // @[HashEngine.scala 72:27]
-  assign Permutation_io_i = i; // @[HashEngine.scala 69:23]
-  assign Permutation_io_b = rounds; // @[HashEngine.scala 71:23]
-  assign Permutation_io_EN_IN = _T_4 ? _GEN_9 : 1'h1; // @[HashEngine.scala 68:27 HashEngine.scala 78:35]
+  assign Permutation_io_State = State; // @[HashEngine.scala 71:27]
+  assign Permutation_io_i = i; // @[HashEngine.scala 68:23]
+  assign Permutation_io_b = rounds; // @[HashEngine.scala 70:23]
+  assign Permutation_io_EN_IN = _T_4 ? _GEN_9 : 1'h1; // @[HashEngine.scala 67:27 HashEngine.scala 77:35]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
