@@ -12,6 +12,7 @@ class HashEngine extends Module { //assuming rate of 64, to be modulated
     val finalMessage = Input(Bool())//both final message input and compute hash requirement
     val H = Output(UInt(64.W))// Size of rate possibly, Will be 256 in Hash or HashA arrangement
     val data_ready = Output(Bool())
+    val idle = Output(Bool())
     //val opMode = Input(UInt(1.W))
   })
     //ROM for arrangements of ASCON
@@ -29,15 +30,23 @@ class HashEngine extends Module { //assuming rate of 64, to be modulated
     val curr_state = RegInit(startup)
     val rounds = RegInit(0.U(4.W))
     val firstCH = RegInit(0.U(1.W))
+    val DR = RegInit(0.U(1.W))
     
     //Module and module wires
     val i = RegInit(0.U(4.W))
     val count = Counter(5)
+    io.idle := curr_state === messagestage
 
     //length
     val length = RegInit(0.U(16.W))
 
     io.H := outState
+    when(DR === 1.U){
+        io.data_ready := true.B
+    }
+    .otherwise{
+        io.data_ready := false.B
+    }
     
     switch(curr_state){
         is(startup){
@@ -57,6 +66,7 @@ class HashEngine extends Module { //assuming rate of 64, to be modulated
             }
         }
         is(runperm){
+            DR := 0.U
             when(io.finalMessage && (firstCH === 0.U)){
                 rounds := aSets//(io.opMode)//a
             }
@@ -87,6 +97,7 @@ class HashEngine extends Module { //assuming rate of 64, to be modulated
         is(computehash){
             firstCH := 1.U
             outState := State(319,256)
+            DR := 1.U
             i := 0.U
             length := length - 64.U //length - rate
             when(count.value === 0.U){ 
@@ -100,14 +111,8 @@ class HashEngine extends Module { //assuming rate of 64, to be modulated
             }
         }
         is(complete){
+            DR := 0.U
             curr_state := complete//is done
         }
-    }
-
-    when(io.H === outState){
-        io.data_ready := true.B
-    }
-    .otherwise{
-        io.data_ready := false.B
     }
 }
