@@ -384,7 +384,8 @@ module HashEngine(
   input         io_accept,
   input         io_finalMessage,
   output [63:0] io_H,
-  output        io_data_ready
+  output        io_data_ready,
+  output        io_idle
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [319:0] _RAND_0;
@@ -394,38 +395,42 @@ module HashEngine(
   reg [31:0] _RAND_4;
   reg [31:0] _RAND_5;
   reg [31:0] _RAND_6;
+  reg [31:0] _RAND_7;
 `endif // RANDOMIZE_REG_INIT
-  wire  Permutation_clock; // @[HashEngine.scala 66:30]
-  wire  Permutation_reset; // @[HashEngine.scala 66:30]
-  wire [319:0] Permutation_io_State; // @[HashEngine.scala 66:30]
-  wire [3:0] Permutation_io_i; // @[HashEngine.scala 66:30]
-  wire [3:0] Permutation_io_b; // @[HashEngine.scala 66:30]
-  wire  Permutation_io_EN_IN; // @[HashEngine.scala 66:30]
-  wire [319:0] Permutation_io_StateR; // @[HashEngine.scala 66:30]
-  reg [319:0] State; // @[HashEngine.scala 24:24]
-  reg [63:0] outState; // @[HashEngine.scala 25:27]
-  reg [2:0] curr_state; // @[HashEngine.scala 29:29]
-  reg [3:0] rounds; // @[HashEngine.scala 30:25]
-  reg [3:0] i; // @[HashEngine.scala 34:20]
+  wire  Permutation_clock; // @[HashEngine.scala 76:30]
+  wire  Permutation_reset; // @[HashEngine.scala 76:30]
+  wire [319:0] Permutation_io_State; // @[HashEngine.scala 76:30]
+  wire [3:0] Permutation_io_i; // @[HashEngine.scala 76:30]
+  wire [3:0] Permutation_io_b; // @[HashEngine.scala 76:30]
+  wire  Permutation_io_EN_IN; // @[HashEngine.scala 76:30]
+  wire [319:0] Permutation_io_StateR; // @[HashEngine.scala 76:30]
+  reg [319:0] State; // @[HashEngine.scala 25:24]
+  reg [63:0] outState; // @[HashEngine.scala 26:27]
+  reg [2:0] curr_state; // @[HashEngine.scala 30:29]
+  reg [3:0] rounds; // @[HashEngine.scala 31:25]
+  reg  DR; // @[HashEngine.scala 33:21]
+  reg [3:0] i; // @[HashEngine.scala 36:20]
   reg [2:0] value; // @[Counter.scala 29:33]
-  reg [15:0] length; // @[HashEngine.scala 38:25]
-  wire  _T = 3'h0 == curr_state; // @[Conditional.scala 37:30]
-  wire  _T_1 = 3'h1 == curr_state; // @[Conditional.scala 37:30]
-  wire [319:0] _T_2 = {io_M,256'h0}; // @[Cat.scala 29:58]
-  wire [319:0] _T_3 = State ^ _T_2; // @[HashEngine.scala 51:32]
-  wire  _T_4 = value == 3'h0; // @[HashEngine.scala 54:34]
-  wire  _T_5 = value == 3'h4; // @[Counter.scala 38:24]
-  wire [2:0] _T_7 = value + 3'h1; // @[Counter.scala 39:22]
-  wire  _T_8 = 3'h2 == curr_state; // @[Conditional.scala 37:30]
-  wire [3:0] _T_16 = i + 4'h1; // @[HashEngine.scala 74:24]
-  wire [3:0] _T_18 = rounds - 4'h1; // @[HashEngine.scala 76:35]
-  wire  _T_19 = i == _T_18; // @[HashEngine.scala 76:24]
-  wire  _GEN_9 = _T_19 ? 1'h0 : 1'h1; // @[HashEngine.scala 76:41]
-  wire  _T_20 = 3'h3 == curr_state; // @[Conditional.scala 37:30]
-  wire [15:0] _T_23 = length - 16'h40; // @[HashEngine.scala 91:30]
-  wire  _T_28 = length == 16'h40; // @[HashEngine.scala 95:25]
-  wire  _T_29 = 3'h4 == curr_state; // @[Conditional.scala 37:30]
-  Permutation Permutation ( // @[HashEngine.scala 66:30]
+  reg [15:0] length; // @[HashEngine.scala 41:25]
+  wire  _T_2 = 3'h0 == curr_state; // @[Conditional.scala 37:30]
+  wire  _T_3 = 3'h1 == curr_state; // @[Conditional.scala 37:30]
+  wire [319:0] _T_4 = {io_M,256'h0}; // @[Cat.scala 29:58]
+  wire [319:0] _T_5 = State ^ _T_4; // @[HashEngine.scala 60:32]
+  wire  _T_6 = value == 3'h0; // @[HashEngine.scala 63:34]
+  wire  _T_7 = value == 3'h4; // @[Counter.scala 38:24]
+  wire [2:0] _T_9 = value + 3'h1; // @[Counter.scala 39:22]
+  wire  _T_10 = 3'h2 == curr_state; // @[Conditional.scala 37:30]
+  wire [3:0] _T_18 = i + 4'h1; // @[HashEngine.scala 84:24]
+  wire [3:0] _T_20 = rounds - 4'h1; // @[HashEngine.scala 86:35]
+  wire  _T_21 = i == _T_20; // @[HashEngine.scala 86:24]
+  wire  _GEN_10 = _T_21 ? 1'h0 : 1'h1; // @[HashEngine.scala 86:41]
+  wire  _T_22 = 3'h3 == curr_state; // @[Conditional.scala 37:30]
+  wire [15:0] _T_25 = length - 16'h40; // @[HashEngine.scala 102:30]
+  wire  _T_30 = length == 16'h40; // @[HashEngine.scala 106:25]
+  wire  _T_31 = 3'h4 == curr_state; // @[Conditional.scala 37:30]
+  wire  _GEN_19 = _T_31 ? 1'h0 : DR; // @[Conditional.scala 39:67]
+  wire  _GEN_23 = _T_22 | _GEN_19; // @[Conditional.scala 39:67]
+  Permutation Permutation ( // @[HashEngine.scala 76:30]
     .clock(Permutation_clock),
     .reset(Permutation_reset),
     .io_State(Permutation_io_State),
@@ -434,14 +439,15 @@ module HashEngine(
     .io_EN_IN(Permutation_io_EN_IN),
     .io_StateR(Permutation_io_StateR)
   );
-  assign io_H = outState; // @[HashEngine.scala 40:10]
-  assign io_data_ready = io_H == outState; // @[HashEngine.scala 108:23 HashEngine.scala 111:23]
+  assign io_H = outState; // @[HashEngine.scala 43:10]
+  assign io_data_ready = DR; // @[HashEngine.scala 45:23 HashEngine.scala 48:23]
+  assign io_idle = curr_state == 3'h1; // @[HashEngine.scala 38:13]
   assign Permutation_clock = clock;
   assign Permutation_reset = reset;
-  assign Permutation_io_State = State; // @[HashEngine.scala 71:27]
-  assign Permutation_io_i = i; // @[HashEngine.scala 68:23]
-  assign Permutation_io_b = rounds; // @[HashEngine.scala 70:23]
-  assign Permutation_io_EN_IN = _T_4 ? _GEN_9 : 1'h1; // @[HashEngine.scala 67:27 HashEngine.scala 77:35]
+  assign Permutation_io_State = State; // @[HashEngine.scala 81:27]
+  assign Permutation_io_i = i; // @[HashEngine.scala 78:23]
+  assign Permutation_io_b = rounds; // @[HashEngine.scala 80:23]
+  assign Permutation_io_EN_IN = _T_6 ? _GEN_10 : 1'h1; // @[HashEngine.scala 77:27 HashEngine.scala 87:35]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -486,11 +492,13 @@ initial begin
   _RAND_3 = {1{`RANDOM}};
   rounds = _RAND_3[3:0];
   _RAND_4 = {1{`RANDOM}};
-  i = _RAND_4[3:0];
+  DR = _RAND_4[0:0];
   _RAND_5 = {1{`RANDOM}};
-  value = _RAND_5[2:0];
+  i = _RAND_5[3:0];
   _RAND_6 = {1{`RANDOM}};
-  length = _RAND_6[15:0];
+  value = _RAND_6[2:0];
+  _RAND_7 = {1{`RANDOM}};
+  length = _RAND_7[15:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -501,23 +509,23 @@ end // initial
   always @(posedge clock) begin
     if (reset) begin
       State <= 320'h0;
-    end else if (_T) begin
+    end else if (_T_2) begin
       State <= 320'hee9398aadb67f03d8bb21831c60f1002b48a92db98d5da6243189921b8f8e3e8348fa5c9d525e140;
-    end else if (_T_1) begin
+    end else if (_T_3) begin
       if (io_accept) begin
-        State <= _T_3;
+        State <= _T_5;
       end
-    end else if (_T_8) begin
-      if (_T_4) begin
+    end else if (_T_10) begin
+      if (_T_6) begin
         State <= Permutation_io_StateR;
       end
     end
     if (reset) begin
       outState <= 64'h0;
-    end else if (!(_T)) begin
-      if (!(_T_1)) begin
-        if (!(_T_8)) begin
-          if (_T_20) begin
+    end else if (!(_T_2)) begin
+      if (!(_T_3)) begin
+        if (!(_T_10)) begin
+          if (_T_22) begin
             outState <= State[319:256];
           end
         end
@@ -525,15 +533,15 @@ end // initial
     end
     if (reset) begin
       curr_state <= 3'h0;
-    end else if (_T) begin
+    end else if (_T_2) begin
       curr_state <= 3'h1;
-    end else if (_T_1) begin
+    end else if (_T_3) begin
       if (io_accept) begin
         curr_state <= 3'h2;
       end
-    end else if (_T_8) begin
-      if (_T_4) begin
-        if (_T_19) begin
+    end else if (_T_10) begin
+      if (_T_6) begin
+        if (_T_21) begin
           if (io_finalMessage) begin
             curr_state <= 3'h3;
           end else begin
@@ -541,76 +549,87 @@ end // initial
           end
         end
       end
-    end else if (_T_20) begin
-      if (_T_28) begin
+    end else if (_T_22) begin
+      if (_T_30) begin
         curr_state <= 3'h4;
       end else begin
         curr_state <= 3'h2;
       end
-    end else if (_T_29) begin
+    end else if (_T_31) begin
       curr_state <= 3'h4;
     end
     if (reset) begin
       rounds <= 4'h0;
-    end else if (!(_T)) begin
-      if (!(_T_1)) begin
-        if (_T_8) begin
+    end else if (!(_T_2)) begin
+      if (!(_T_3)) begin
+        if (_T_10) begin
           rounds <= 4'hc;
         end
       end
     end
     if (reset) begin
+      DR <= 1'h0;
+    end else if (!(_T_2)) begin
+      if (!(_T_3)) begin
+        if (_T_10) begin
+          DR <= 1'h0;
+        end else begin
+          DR <= _GEN_23;
+        end
+      end
+    end
+    if (reset) begin
       i <= 4'h0;
-    end else if (!(_T)) begin
-      if (_T_1) begin
+    end else if (!(_T_2)) begin
+      if (_T_3) begin
         if (io_accept) begin
           i <= 4'h0;
         end
-      end else if (_T_8) begin
-        if (_T_4) begin
-          i <= _T_16;
+      end else if (_T_10) begin
+        if (_T_6) begin
+          i <= _T_18;
         end
-      end else if (_T_20) begin
+      end else if (_T_22) begin
         i <= 4'h0;
       end
     end
     if (reset) begin
       value <= 3'h0;
-    end else if (!(_T)) begin
-      if (_T_1) begin
+    end else if (!(_T_2)) begin
+      if (_T_3) begin
         if (io_accept) begin
-          if (_T_4) begin
-            if (_T_5) begin
+          if (_T_6) begin
+            if (_T_7) begin
               value <= 3'h0;
             end else begin
-              value <= _T_7;
+              value <= _T_9;
             end
           end
         end
-      end else if (_T_8) begin
-        if (_T_5) begin
+      end else if (_T_10) begin
+        if (_T_7) begin
           value <= 3'h0;
         end else begin
-          value <= _T_7;
+          value <= _T_9;
         end
-      end else if (_T_20) begin
-        if (_T_4) begin
-          if (_T_5) begin
+      end else if (_T_22) begin
+        if (_T_6) begin
+          if (_T_7) begin
             value <= 3'h0;
           end else begin
-            value <= _T_7;
+            value <= _T_9;
           end
         end
       end
     end
     if (reset) begin
       length <= 16'h0;
-    end else if (_T) begin
+    end else if (_T_2) begin
       length <= 16'h100;
-    end else if (!(_T_1)) begin
-      if (!(_T_8)) begin
-        if (_T_20) begin
-          length <= _T_23;
+    end else if (!(_T_3)) begin
+      if (!(_T_10)) begin
+        if (_T_22) begin
+          length <= _T_25;
         end
       end
     end
