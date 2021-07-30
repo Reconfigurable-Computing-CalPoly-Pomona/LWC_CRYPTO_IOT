@@ -11,7 +11,7 @@ class LP extends Module {
     val SPrime  = Output(UInt(320.W))
   })
   //temp value to be stored to output on clock
-  val state = RegInit(0.U(320.W))
+  //val state = Wire(UInt(320.W))
     //Performs actions bases on p_L from paper in ASCON
     //Split state into 5 64-bit values
     val x0 = WireInit(0.U(64.W))
@@ -20,13 +20,13 @@ class LP extends Module {
     val x3 = WireInit(0.U(64.W))
     val x4 = WireInit(0.U(64.W))
 
-    val x0Prime = WireInit(0.U(64.W))
-    val x1Prime = WireInit(0.U(64.W))
-    val x2Prime = WireInit(0.U(64.W))
-    val x3Prime = WireInit(0.U(64.W))
-    val x4Prime = WireInit(0.U(64.W))
-  when ( io.EN_IN)
-  {
+    //val x0Prime = WireInit(0.U(64.W))
+    //val x1Prime = WireInit(0.U(64.W))
+    //val x2Prime = WireInit(0.U(64.W))
+    //val x3Prime = WireInit(0.U(64.W))
+    //val x4Prime = WireInit(0.U(64.W))
+  //when ( io.EN_IN)
+  //{
 
     x4 := io.S( 63,   0)
     x3 := io.S(127,  64)
@@ -46,7 +46,7 @@ class LP extends Module {
     x3Prime := x3 ^ Cat(x3(9, 0), x3(63, 10)) ^ Cat(x3(16, 0),x3(63, 17))
     x4Prime := x4 ^ Cat(x4(6, 0), x4(63, 7))  ^ Cat(x4(40, 0),x4(63, 41)) 
     //Concatenate and send to out
-    state := Cat(x0Prime,x1Prime,x2Prime,x3Prime,x4Prime)
-  }
-  io.SPrime := state
+    //state := Cat(x0Prime,x1Prime,x2Prime,x3Prime,x4Prime)
+  //}
+  io.SPrime := Cat(x0Prime,x1Prime,x2Prime,x3Prime,x4Prime)
 }

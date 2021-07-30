@@ -21,13 +21,13 @@ class ConstantParam extends Module {
 
 //only performing on last 8 bits as input of X2
 val r = Wire(UInt(8.W))
-val x2c = Reg(UInt(8.W))
+val x2c = Wire(UInt(8.W))
 x2c := io.inCR(136,128)
 r := io.i + io.a - io.b
 
-val outReg = Reg(UInt(8.W))
-when (io.EN_IN) 
-{
+val outReg = Wire(UInt(8.W))
+//when (io.EN_IN) 
+//s{
   when ( r === 0.U ) { outReg := x2c ^ 0xf0.U }
   .elsewhen( r === 1.U) { outReg := x2c ^ 0xe1.U }
   .elsewhen( r === 2.U) { outReg := x2c ^ 0xd2.U }
@@ -41,7 +41,7 @@ when (io.EN_IN)
   .elsewhen( r === 10.U) { outReg := x2c ^ 0x5a.U }
   .elsewhen( r === 11.U) { outReg := x2c ^ 0x4b.U }
   .otherwise { outReg := 0.U } 
-}
+//}
 
 io.outCR := Cat(io.inCR(319,136),outReg,io.inCR(127,0))
 }

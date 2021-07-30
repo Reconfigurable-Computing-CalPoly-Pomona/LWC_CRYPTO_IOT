@@ -1,9 +1,9 @@
-package LWC
+package foobar
 
 import chisel3._
 import chisel3.util._
 
-import LWC.Permutation
+import foobar.Permutation
 
 
 class HashEngineReco extends Module { //assuming rate of 64, to be modulated
@@ -50,7 +50,7 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
 
     //Module and module wires
     val i = RegInit(0.U(4.W))
-    val count = Counter(5)
+    val count = Counter(2)
     io.data_in_ready := curr_state === messagestage
     io.opModeOut := operand
 

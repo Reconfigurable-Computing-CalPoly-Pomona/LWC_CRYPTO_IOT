@@ -10,7 +10,7 @@ class SBoxHW extends Module {
     val Sout = Output(UInt(320.W))
   })
   
-  val outReg = RegInit(0.U(320.W))
+  val outReg = Wire(UInt(320.W))
  
   val x0 = WireInit(0.U(64.W))
   val x1 = WireInit(0.U(64.W))
@@ -35,8 +35,8 @@ class SBoxHW extends Module {
   val step2x1 = WireInit(0.U(64.W))
   val step2x3 = WireInit(0.U(64.W))
   
-  when(io.EN_IN)
-  {
+  //when(io.EN_IN)
+  //{
 
   x4 := io.S( 63,   0)
   x3 := io.S(127,  64)
@@ -61,8 +61,8 @@ class SBoxHW extends Module {
   outx4 := step2x4
   
   outReg := Cat(outx0,outx1,outx2,outx3,outx4)
-  }.otherwise {
-  outReg := outReg
-  } 
+  //}.otherwise {
+  //outReg := outReg
+  //} 
   io.Sout := outReg
 }
