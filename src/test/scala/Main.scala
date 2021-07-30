@@ -25,9 +25,10 @@ object TestMain extends App {
     "ConstantParam"             -> (() => ConstantParamTest.run(args2), "ConstantParam desc" ),
     "SBoxHW"             -> (() => SBoxHWTest.run(args2), "SBoxHW desc" ),
     "LP"             -> (() => LPTest.run(args2), "LP desc" ),
-    "Permutation"             -> (() => PermutationTest.run(args2), "Permutation desc" )
+    "Permutation"             -> (() => PermutationTest.run(args2), "Permutation desc" ),
+    "HashEngineReco"             -> (() => HashEngineRecoTest.run(args2), "HashEngineReco desc" )
+
   )
 
   TestUtil.launch(args, targetmap)
 }
-
