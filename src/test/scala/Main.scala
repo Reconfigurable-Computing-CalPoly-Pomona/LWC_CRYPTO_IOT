@@ -26,6 +26,7 @@ object TestMain extends App {
     "SBoxHW"             -> (() => SBoxHWTest.run(args2), "SBoxHW desc" ),
     "LP"             -> (() => LPTest.run(args2), "LP desc" ),
     "Permutation"             -> (() => PermutationTest.run(args2), "Permutation desc" ),
+    "Fifo"             -> (() => FifoTest.run(args2), "Fifo desc" ),
     "HashEngineReco"             -> (() => HashEngineRecoTest.run(args2), "HashEngineReco desc" )
 
   )
