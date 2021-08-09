@@ -9,7 +9,8 @@ import foobar._
 class HashEngineReco extends Module { //assuming rate of 64, to be modulated
   val io = IO(new Bundle {
     val M = Input(UInt(64.W))
-    val accept = Input(Bool())
+    val pushData = Input(Bool())
+    val Fifoaccept = Input(Bool())
     val finalMessage = Input(Bool())//both final message input and compute hash requirement
     val H = Output(UInt(64.W))// Size of rate possibly, Will be 256 in Hash or HashA arrangement
     val SWout = Input(UInt(2.W))
@@ -18,6 +19,7 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
     val done = Output(Bool())
     val opMode = Input(UInt(1.W))
     val opModeOut = Output(UInt(1.W))
+    val FifoReadyIn = Output(UInt(1.W))
   })
 
     /*def PrecomputedStates(in: UInt) = {
@@ -69,6 +71,54 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
         io.data_out_ready := false.B
     }
     
+
+    
+    val FIFO = Module(new Fifo(16) )
+    
+    val test = RegInit(false.B)
+    FIFO.io.enq_val := test
+    val pulseIn :: singleOut :: Nil = Enum(2)
+    val stateP = RegInit(pulseIn)
+    switch(stateP){
+    	is(pulseIn){
+    	   when(io.Fifoaccept){
+    	   	test := true.B
+    	   	stateP := singleOut
+    	   }.otherwise {
+    	   	test := false.B
+    	   }
+    	   
+    	}
+    	is(singleOut){
+	when(!io.Fifoaccept){	
+		stateP := pulseIn
+    	}
+    	test := false.B
+    	}
+    }
+    
+    io.FifoReadyIn := FIFO.io.enq_rdy 
+    
+    val FIFOReadyOut = WireInit(false.B)
+    FIFOReadyOut := FIFO.io.deq_val
+    
+    //when fifo not full? 
+    FIFO.io.deq_rdy := io.data_in_ready
+    
+    FIFO.io.enq_dat := io.M
+    
+    val FIFOM = WireInit(0.U(64.W))
+    
+    FIFOM := FIFO.io.deq_dat
+//val enq_val = Bool(INPUT) io.accept
+//val enq_rdy = Bool(OUTPUT) R
+//val deq_val = Bool(OUTPUT) FIFOReadyOut
+//val deq_rdy = Bool(INPUT) data_in_ready
+//val enq_dat = type.asInput io.M
+//val deq_dat = type.asOutput FIFOM  
+
+//if final message 1 and isempty 1 := stop hashing 
+
     switch(curr_state){
         is(startup){
             State := Mux(io.opMode === 1.U,BigInt("01470194fc6528a6738ec38ac0adffa72ec8e3296c76384cd6f6a54d7f52377da13c42a223be8d87",16).U,BigInt("ee9398aadb67f03d8bb21831c60f1002b48a92db98d5da6243189921b8f8e3e8348fa5c9d525e140",16).U)//(io.opMode)
@@ -77,13 +127,15 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
             operand := io.opMode
         }
         is(messagestage){
-            when(io.accept){
-                State := State ^ Cat(io.M,0.U(256.W))
+            when(io.pushData && FIFOReadyOut && !FIFO.io.is_empty){
+                State := State ^ Cat(FIFOM,0.U(256.W))
                 curr_state := runperm
                 i := 0.U
                 when(count.value === 0.U){
                     count.inc()
                 }
+            }.elsewhen( io.finalMessage && FIFO.io.is_empty){
+            	curr_state := computehash
             }
         }
         is(runperm){
@@ -106,7 +158,7 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
                 State := perm.io.StateR
                 when(i === rounds - 1.U){ //finished expected rounds
                     perm.io.EN_IN := false.B
-                    when(io.finalMessage){
+                    when(io.finalMessage && FIFO.io.is_empty){
                         curr_state := computehash
                     }
                     .otherwise{
