@@ -7,9 +7,9 @@
 #include "xil_types.h"
 #include "stdio.h"
 #include "xil_io.h"
-#include <fstream>
-#include <sstream>
-#include <string>
+//#include <fstream>
+//#include <sstream>
+//#include <string>
 #include "sleep.h"
 
 #define pushData 0
