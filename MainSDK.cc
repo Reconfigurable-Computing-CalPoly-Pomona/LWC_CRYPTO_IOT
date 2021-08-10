@@ -148,7 +148,6 @@ int main()
 		ASCON_AXI_mWriteReg(baseAddr, ASCON_AXI_S00_AXI_SLV_REG0_OFFSET, M_High);
 		ASCON_AXI_mWriteReg(baseAddr, ASCON_AXI_S00_AXI_SLV_REG1_OFFSET, M_Low);
 		changeReg4Bit(Fifoaccept,1);
-		//usleep(1000);
 		changeReg4Bit(Fifoaccept,0);
 	}
 
