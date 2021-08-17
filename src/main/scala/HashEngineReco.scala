@@ -134,9 +134,9 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
                 when(count.value === 0.U){
                     count.inc()
                 }
-            }.elsewhen( io.finalMessage && FIFO.io.is_empty){
-            	curr_state := computehash
-            }
+            }//.elsewhen( io.finalMessage && FIFO.io.is_empty){
+            //	curr_state := computehash
+            //}
         }
         is(runperm){
             DR := 0.U
