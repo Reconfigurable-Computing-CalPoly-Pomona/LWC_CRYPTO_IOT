@@ -349,57 +349,56 @@ module HashEngineReco(
   wire [319:0] _T_13 = State ^ _T_12; // @[HashEngineReco.scala 131:32]
   wire  _T_14 = ~value; // @[HashEngineReco.scala 134:34]
   wire  _GEN_8 = ~value ? value + 1'h1 : value; // @[HashEngineReco.scala 134:42 Counter.scala 76:15 Counter.scala 60:40]
-  wire  _T_15 = io_finalMessage & FIFO_io_is_empty; // @[HashEngineReco.scala 137:41]
-  wire [2:0] _GEN_9 = io_finalMessage & FIFO_io_is_empty ? 3'h3 : curr_state; // @[HashEngineReco.scala 137:61 HashEngineReco.scala 138:28 HashEngineReco.scala 49:29]
-  wire  _T_16 = 3'h2 == curr_state; // @[Conditional.scala 37:30]
-  wire [3:0] _GEN_17 = operand ? 4'h8 : 4'hc; // @[HashEngineReco.scala 147:24 HashEngineReco.scala 147:24]
-  wire [3:0] _GEN_18 = _T_15 & ~firstCH ? 4'hc : _GEN_17; // @[HashEngineReco.scala 143:78 HashEngineReco.scala 144:24 HashEngineReco.scala 147:24]
-  wire [3:0] _T_22 = i + 4'h1; // @[HashEngineReco.scala 157:24]
-  wire [3:0] _T_24 = rounds - 4'h1; // @[HashEngineReco.scala 159:35]
-  wire [2:0] _GEN_19 = _T_15 ? 3'h3 : 3'h1; // @[HashEngineReco.scala 161:62 HashEngineReco.scala 162:36 HashEngineReco.scala 165:36]
-  wire [2:0] _GEN_21 = i == _T_24 ? _GEN_19 : curr_state; // @[HashEngineReco.scala 159:41 HashEngineReco.scala 49:29]
-  wire [3:0] _GEN_22 = _T_14 ? _T_22 : i; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 157:19 HashEngineReco.scala 56:20]
-  wire [319:0] _GEN_23 = _T_14 ? Permutation_io_StateR : State; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 158:23 HashEngineReco.scala 44:24]
-  wire [2:0] _GEN_25 = _T_14 ? _GEN_21 : curr_state; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 49:29]
-  wire  _T_27 = 3'h3 == curr_state; // @[Conditional.scala 37:30]
-  wire [15:0] _T_30 = length - 16'h40; // @[HashEngineReco.scala 175:30]
-  wire [2:0] _GEN_27 = length == 16'h40 ? 3'h4 : 3'h2; // @[HashEngineReco.scala 179:34 HashEngineReco.scala 180:28 HashEngineReco.scala 183:28]
-  wire  _T_33 = 3'h4 == curr_state; // @[Conditional.scala 37:30]
-  wire  _GEN_28 = _T_33 ? 1'h0 : DR; // @[Conditional.scala 39:67 HashEngineReco.scala 187:16 HashEngineReco.scala 52:21]
-  wire [2:0] _GEN_29 = _T_33 ? 3'h4 : curr_state; // @[Conditional.scala 39:67 HashEngineReco.scala 188:24 HashEngineReco.scala 49:29]
-  wire  _GEN_30 = _T_27 | firstCH; // @[Conditional.scala 39:67 HashEngineReco.scala 171:21 HashEngineReco.scala 51:26]
-  wire [63:0] _GEN_31 = _T_27 ? State[319:256] : outState; // @[Conditional.scala 39:67 HashEngineReco.scala 172:22 HashEngineReco.scala 45:27]
-  wire  _GEN_32 = _T_27 | _GEN_28; // @[Conditional.scala 39:67 HashEngineReco.scala 173:16]
-  wire [3:0] _GEN_33 = _T_27 ? 4'h0 : i; // @[Conditional.scala 39:67 HashEngineReco.scala 174:15 HashEngineReco.scala 56:20]
-  wire [15:0] _GEN_34 = _T_27 ? _T_30 : length; // @[Conditional.scala 39:67 HashEngineReco.scala 175:20 HashEngineReco.scala 62:25]
-  wire  _GEN_35 = _T_27 ? _GEN_8 : value; // @[Conditional.scala 39:67 Counter.scala 60:40]
-  wire [2:0] _GEN_36 = _T_27 ? _GEN_27 : _GEN_29; // @[Conditional.scala 39:67]
+  wire  _T_15 = 3'h2 == curr_state; // @[Conditional.scala 37:30]
+  wire  _T_16 = io_finalMessage & FIFO_io_is_empty; // @[HashEngineReco.scala 143:36]
+  wire [3:0] _GEN_16 = operand ? 4'h8 : 4'hc; // @[HashEngineReco.scala 147:24 HashEngineReco.scala 147:24]
+  wire [3:0] _GEN_17 = io_finalMessage & FIFO_io_is_empty & ~firstCH ? 4'hc : _GEN_16; // @[HashEngineReco.scala 143:78 HashEngineReco.scala 144:24 HashEngineReco.scala 147:24]
+  wire [3:0] _T_21 = i + 4'h1; // @[HashEngineReco.scala 157:24]
+  wire [3:0] _T_23 = rounds - 4'h1; // @[HashEngineReco.scala 159:35]
+  wire [2:0] _GEN_18 = _T_16 ? 3'h3 : 3'h1; // @[HashEngineReco.scala 161:62 HashEngineReco.scala 162:36 HashEngineReco.scala 165:36]
+  wire [2:0] _GEN_20 = i == _T_23 ? _GEN_18 : curr_state; // @[HashEngineReco.scala 159:41 HashEngineReco.scala 49:29]
+  wire [3:0] _GEN_21 = _T_14 ? _T_21 : i; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 157:19 HashEngineReco.scala 56:20]
+  wire [319:0] _GEN_22 = _T_14 ? Permutation_io_StateR : State; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 158:23 HashEngineReco.scala 44:24]
+  wire [2:0] _GEN_24 = _T_14 ? _GEN_20 : curr_state; // @[HashEngineReco.scala 156:38 HashEngineReco.scala 49:29]
+  wire  _T_26 = 3'h3 == curr_state; // @[Conditional.scala 37:30]
+  wire [15:0] _T_29 = length - 16'h40; // @[HashEngineReco.scala 175:30]
+  wire [2:0] _GEN_26 = length == 16'h40 ? 3'h4 : 3'h2; // @[HashEngineReco.scala 179:34 HashEngineReco.scala 180:28 HashEngineReco.scala 183:28]
+  wire  _T_32 = 3'h4 == curr_state; // @[Conditional.scala 37:30]
+  wire  _GEN_27 = _T_32 ? 1'h0 : DR; // @[Conditional.scala 39:67 HashEngineReco.scala 187:16 HashEngineReco.scala 52:21]
+  wire [2:0] _GEN_28 = _T_32 ? 3'h4 : curr_state; // @[Conditional.scala 39:67 HashEngineReco.scala 188:24 HashEngineReco.scala 49:29]
+  wire  _GEN_29 = _T_26 | firstCH; // @[Conditional.scala 39:67 HashEngineReco.scala 171:21 HashEngineReco.scala 51:26]
+  wire [63:0] _GEN_30 = _T_26 ? State[319:256] : outState; // @[Conditional.scala 39:67 HashEngineReco.scala 172:22 HashEngineReco.scala 45:27]
+  wire  _GEN_31 = _T_26 | _GEN_27; // @[Conditional.scala 39:67 HashEngineReco.scala 173:16]
+  wire [3:0] _GEN_32 = _T_26 ? 4'h0 : i; // @[Conditional.scala 39:67 HashEngineReco.scala 174:15 HashEngineReco.scala 56:20]
+  wire [15:0] _GEN_33 = _T_26 ? _T_29 : length; // @[Conditional.scala 39:67 HashEngineReco.scala 175:20 HashEngineReco.scala 62:25]
+  wire  _GEN_34 = _T_26 ? _GEN_8 : value; // @[Conditional.scala 39:67 Counter.scala 60:40]
+  wire [2:0] _GEN_35 = _T_26 ? _GEN_26 : _GEN_28; // @[Conditional.scala 39:67]
   reg [255:0] HoldOut; // @[HashEngineReco.scala 191:26]
   reg [2:0] value_1; // @[Counter.scala 60:40]
   wire [191:0] hi = HoldOut[255:64]; // @[HashEngineReco.scala 196:39]
-  wire [255:0] _T_36 = {hi,outState}; // @[Cat.scala 30:58]
+  wire [255:0] _T_35 = {hi,outState}; // @[Cat.scala 30:58]
   wire [187:0] hi_hi = HoldOut[255:68]; // @[HashEngineReco.scala 198:39]
   wire [63:0] lo = HoldOut[63:0]; // @[HashEngineReco.scala 198:64]
-  wire [315:0] _T_38 = {hi_hi,outState,lo}; // @[Cat.scala 30:58]
+  wire [315:0] _T_37 = {hi_hi,outState,lo}; // @[Cat.scala 30:58]
   wire [63:0] hi_hi_1 = HoldOut[255:192]; // @[HashEngineReco.scala 200:39]
   wire [127:0] lo_1 = HoldOut[127:0]; // @[HashEngineReco.scala 200:65]
-  wire [255:0] _T_40 = {hi_hi_1,outState,lo_1}; // @[Cat.scala 30:58]
+  wire [255:0] _T_39 = {hi_hi_1,outState,lo_1}; // @[Cat.scala 30:58]
   wire [191:0] lo_2 = HoldOut[191:0]; // @[HashEngineReco.scala 202:48]
-  wire [255:0] _T_42 = {outState,lo_2}; // @[Cat.scala 30:58]
-  wire [255:0] _GEN_65 = value_1 == 3'h3 ? _T_42 : HoldOut; // @[HashEngineReco.scala 201:43 HashEngineReco.scala 202:25 HashEngineReco.scala 205:25]
-  wire [255:0] _GEN_66 = value_1 == 3'h2 ? _T_40 : _GEN_65; // @[HashEngineReco.scala 199:43 HashEngineReco.scala 200:25]
-  wire [315:0] _GEN_67 = value_1 == 3'h1 ? _T_38 : {{60'd0}, _GEN_66}; // @[HashEngineReco.scala 197:43 HashEngineReco.scala 198:25]
-  wire [315:0] _GEN_68 = value_1 == 3'h0 ? {{60'd0}, _T_36} : _GEN_67; // @[HashEngineReco.scala 195:37 HashEngineReco.scala 196:25]
+  wire [255:0] _T_41 = {outState,lo_2}; // @[Cat.scala 30:58]
+  wire [255:0] _GEN_64 = value_1 == 3'h3 ? _T_41 : HoldOut; // @[HashEngineReco.scala 201:43 HashEngineReco.scala 202:25 HashEngineReco.scala 205:25]
+  wire [255:0] _GEN_65 = value_1 == 3'h2 ? _T_39 : _GEN_64; // @[HashEngineReco.scala 199:43 HashEngineReco.scala 200:25]
+  wire [315:0] _GEN_66 = value_1 == 3'h1 ? _T_37 : {{60'd0}, _GEN_65}; // @[HashEngineReco.scala 197:43 HashEngineReco.scala 198:25]
+  wire [315:0] _GEN_67 = value_1 == 3'h0 ? {{60'd0}, _T_35} : _GEN_66; // @[HashEngineReco.scala 195:37 HashEngineReco.scala 196:25]
   wire  wrap_3 = value_1 == 3'h4; // @[Counter.scala 72:24]
   wire [2:0] _value_T_7 = value_1 + 3'h1; // @[Counter.scala 76:24]
-  wire [315:0] _GEN_70 = io_data_out_ready ? _GEN_68 : {{60'd0}, HoldOut}; // @[HashEngineReco.scala 193:36 HashEngineReco.scala 191:26]
-  wire  _T_44 = 2'h0 == io_SWout; // @[Conditional.scala 37:30]
-  wire  _T_46 = 2'h1 == io_SWout; // @[Conditional.scala 37:30]
-  wire  _T_48 = 2'h2 == io_SWout; // @[Conditional.scala 37:30]
-  wire  _T_50 = 2'h3 == io_SWout; // @[Conditional.scala 37:30]
-  wire [63:0] _GEN_72 = _T_50 ? hi_hi_1 : 64'h0; // @[Conditional.scala 39:67 HashEngineReco.scala 223:17]
-  wire [63:0] _GEN_73 = _T_48 ? HoldOut[191:128] : _GEN_72; // @[Conditional.scala 39:67 HashEngineReco.scala 220:17]
-  wire [63:0] _GEN_74 = _T_46 ? HoldOut[127:64] : _GEN_73; // @[Conditional.scala 39:67 HashEngineReco.scala 217:17]
+  wire [315:0] _GEN_69 = io_data_out_ready ? _GEN_67 : {{60'd0}, HoldOut}; // @[HashEngineReco.scala 193:36 HashEngineReco.scala 191:26]
+  wire  _T_43 = 2'h0 == io_SWout; // @[Conditional.scala 37:30]
+  wire  _T_45 = 2'h1 == io_SWout; // @[Conditional.scala 37:30]
+  wire  _T_47 = 2'h2 == io_SWout; // @[Conditional.scala 37:30]
+  wire  _T_49 = 2'h3 == io_SWout; // @[Conditional.scala 37:30]
+  wire [63:0] _GEN_71 = _T_49 ? hi_hi_1 : 64'h0; // @[Conditional.scala 39:67 HashEngineReco.scala 223:17]
+  wire [63:0] _GEN_72 = _T_47 ? HoldOut[191:128] : _GEN_71; // @[Conditional.scala 39:67 HashEngineReco.scala 220:17]
+  wire [63:0] _GEN_73 = _T_45 ? HoldOut[127:64] : _GEN_72; // @[Conditional.scala 39:67 HashEngineReco.scala 217:17]
   Fifo FIFO ( // @[HashEngineReco.scala 76:22]
     .clock(FIFO_clock),
     .reset(FIFO_reset),
@@ -418,7 +417,7 @@ module HashEngineReco(
     .io_b(Permutation_io_b),
     .io_StateR(Permutation_io_StateR)
   );
-  assign io_H = _T_44 ? lo : _GEN_74; // @[Conditional.scala 40:58 HashEngineReco.scala 214:17]
+  assign io_H = _T_43 ? lo : _GEN_73; // @[Conditional.scala 40:58 HashEngineReco.scala 214:17]
   assign io_data_in_ready = curr_state == 3'h1; // @[HashEngineReco.scala 58:36]
   assign io_data_out_ready = DR; // @[HashEngineReco.scala 67:21 HashEngineReco.scala 68:27 HashEngineReco.scala 71:27]
   assign io_done = value_1 == 3'h4; // @[HashEngineReco.scala 210:32]
@@ -445,15 +444,15 @@ module HashEngineReco(
       if (io_pushData & FIFOReadyOut & ~FIFO_io_is_empty) begin // @[HashEngineReco.scala 130:67]
         State <= _T_13; // @[HashEngineReco.scala 131:23]
       end
-    end else if (_T_16) begin // @[Conditional.scala 39:67]
-      State <= _GEN_23;
+    end else if (_T_15) begin // @[Conditional.scala 39:67]
+      State <= _GEN_22;
     end
     if (reset) begin // @[HashEngineReco.scala 45:27]
       outState <= 64'h0; // @[HashEngineReco.scala 45:27]
     end else if (!(_T_5)) begin // @[Conditional.scala 40:58]
       if (!(_T_8)) begin // @[Conditional.scala 39:67]
-        if (!(_T_16)) begin // @[Conditional.scala 39:67]
-          outState <= _GEN_31;
+        if (!(_T_15)) begin // @[Conditional.scala 39:67]
+          outState <= _GEN_30;
         end
       end
     end
@@ -464,20 +463,18 @@ module HashEngineReco(
     end else if (_T_8) begin // @[Conditional.scala 39:67]
       if (io_pushData & FIFOReadyOut & ~FIFO_io_is_empty) begin // @[HashEngineReco.scala 130:67]
         curr_state <= 3'h2; // @[HashEngineReco.scala 132:28]
-      end else begin
-        curr_state <= _GEN_9;
       end
-    end else if (_T_16) begin // @[Conditional.scala 39:67]
-      curr_state <= _GEN_25;
+    end else if (_T_15) begin // @[Conditional.scala 39:67]
+      curr_state <= _GEN_24;
     end else begin
-      curr_state <= _GEN_36;
+      curr_state <= _GEN_35;
     end
     if (reset) begin // @[HashEngineReco.scala 50:25]
       rounds <= 4'h0; // @[HashEngineReco.scala 50:25]
     end else if (!(_T_5)) begin // @[Conditional.scala 40:58]
       if (!(_T_8)) begin // @[Conditional.scala 39:67]
-        if (_T_16) begin // @[Conditional.scala 39:67]
-          rounds <= _GEN_18;
+        if (_T_15) begin // @[Conditional.scala 39:67]
+          rounds <= _GEN_17;
         end
       end
     end
@@ -485,8 +482,8 @@ module HashEngineReco(
       firstCH <= 1'h0; // @[HashEngineReco.scala 51:26]
     end else if (!(_T_5)) begin // @[Conditional.scala 40:58]
       if (!(_T_8)) begin // @[Conditional.scala 39:67]
-        if (!(_T_16)) begin // @[Conditional.scala 39:67]
-          firstCH <= _GEN_30;
+        if (!(_T_15)) begin // @[Conditional.scala 39:67]
+          firstCH <= _GEN_29;
         end
       end
     end
@@ -494,10 +491,10 @@ module HashEngineReco(
       DR <= 1'h0; // @[HashEngineReco.scala 52:21]
     end else if (!(_T_5)) begin // @[Conditional.scala 40:58]
       if (!(_T_8)) begin // @[Conditional.scala 39:67]
-        if (_T_16) begin // @[Conditional.scala 39:67]
+        if (_T_15) begin // @[Conditional.scala 39:67]
           DR <= 1'h0; // @[HashEngineReco.scala 142:16]
         end else begin
-          DR <= _GEN_32;
+          DR <= _GEN_31;
         end
       end
     end
@@ -513,10 +510,10 @@ module HashEngineReco(
         if (io_pushData & FIFOReadyOut & ~FIFO_io_is_empty) begin // @[HashEngineReco.scala 130:67]
           i <= 4'h0; // @[HashEngineReco.scala 133:19]
         end
-      end else if (_T_16) begin // @[Conditional.scala 39:67]
-        i <= _GEN_22;
+      end else if (_T_15) begin // @[Conditional.scala 39:67]
+        i <= _GEN_21;
       end else begin
-        i <= _GEN_33;
+        i <= _GEN_32;
       end
     end
     if (reset) begin // @[Counter.scala 60:40]
@@ -526,10 +523,10 @@ module HashEngineReco(
         if (io_pushData & FIFOReadyOut & ~FIFO_io_is_empty) begin // @[HashEngineReco.scala 130:67]
           value <= _GEN_8;
         end
-      end else if (_T_16) begin // @[Conditional.scala 39:67]
+      end else if (_T_15) begin // @[Conditional.scala 39:67]
         value <= value + 1'h1; // @[Counter.scala 76:15]
       end else begin
-        value <= _GEN_35;
+        value <= _GEN_34;
       end
     end
     if (reset) begin // @[HashEngineReco.scala 62:25]
@@ -537,8 +534,8 @@ module HashEngineReco(
     end else if (_T_5) begin // @[Conditional.scala 40:58]
       length <= 16'h100; // @[HashEngineReco.scala 125:20]
     end else if (!(_T_8)) begin // @[Conditional.scala 39:67]
-      if (!(_T_16)) begin // @[Conditional.scala 39:67]
-        length <= _GEN_34;
+      if (!(_T_15)) begin // @[Conditional.scala 39:67]
+        length <= _GEN_33;
       end
     end
     if (reset) begin // @[HashEngineReco.scala 78:23]
@@ -560,7 +557,7 @@ module HashEngineReco(
     if (reset) begin // @[HashEngineReco.scala 191:26]
       HoldOut <= 256'h0; // @[HashEngineReco.scala 191:26]
     end else begin
-      HoldOut <= _GEN_70[255:0];
+      HoldOut <= _GEN_69[255:0];
     end
     if (reset) begin // @[Counter.scala 60:40]
       value_1 <= 3'h0; // @[Counter.scala 60:40]
