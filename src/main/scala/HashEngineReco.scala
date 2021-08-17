@@ -140,7 +140,7 @@ class HashEngineReco extends Module { //assuming rate of 64, to be modulated
         }
         is(runperm){
             DR := 0.U
-            when(io.finalMessage && (firstCH === 0.U)){
+            when( (io.finalMessage && FIFO.io.is_empty) && (firstCH === 0.U)){
                 rounds := aSets(operand)//a
             }
             .otherwise{
