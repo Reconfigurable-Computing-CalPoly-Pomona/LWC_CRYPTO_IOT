@@ -7,20 +7,20 @@ chisel
 verilator 
 gtkwave 
 
-## How to run 
+# How to run 
 cd LWC_CRYPTO_IOT
 
-to run a test bench file 
+## to run a test bench file 
 ./run.sh t "file Name"
 
-to generate file 
+## to generate file 
 ./run.sh v "file Name"
 
 
-to generate verilator file output
+## to generate verilator file output
 ./run.sh s "file Name"
 
-to view outputs on a waveform
+## to view outputs on a waveform
 cd test_run_dir
 cd "generated file from 's' output"
 gtkwave "file name".vcd
