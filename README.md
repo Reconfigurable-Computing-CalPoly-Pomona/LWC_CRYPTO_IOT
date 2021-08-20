@@ -7,7 +7,7 @@ chisel
 verilator 
 gtkwave 
 
-##How to run 
+## How to run 
 cd LWC_CRYPTO_IOT
 
 to run a test bench file 
