@@ -21,7 +21,6 @@ object TestMain extends App {
   // key is the name of target module
   // value contains the run method function and the description
   val targetmap = Map(
-    "Foo"             -> (() => FooTest.run(args2), "dummy"),
     "ConstantParam"             -> (() => ConstantParamTest.run(args2), "ConstantParam desc" ),
     "SBoxHW"             -> (() => SBoxHWTest.run(args2), "SBoxHW desc" ),
     "LP"             -> (() => LPTest.run(args2), "LP desc" ),

@@ -15,7 +15,7 @@ fi
 mode=$1
 shift
 
-target=Foo   # default
+target=Hash   # default
 if [ ! -z "$1" ] ; then
     target=$1
 fi
